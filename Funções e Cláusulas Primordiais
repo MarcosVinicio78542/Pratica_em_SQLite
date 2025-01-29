@@ -1,0 +1,79 @@
+-- Criado tabela Bem Simples chamada 'clientes' com 5 colunas sendo id uma coluna de chave prímaria
+
+CREATE TABLE clientes (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ Nome VARCHAR(10),
+ Idade INTEGER,
+ Marca VARCHAR(10),
+ Sexo CHAR(1)
+);
+
+-- Inserindo clientes a tabela por definição inicial o valor de 'id' 
+-- e preechido automaticamente 
+
+INSERT INTO clientes (Nome, Marca, Idade, Sexo) VALUES
+('Ana Vitória', 'Natura', 19, 'F'),
+('Marcio Souza', 'Avon', 25, 'M'),
+('Juliana Oliveira', 'O Boticário', 30, 'F'),
+('Carlos Silva', 'LOréal', 22, 'M'),
+('Patrícia Gomes', 'Jequiti', 27, 'F'),
+('Felipe Lima', 'Granado', 33, 'M'),
+('Camila Costa', 'Natura', 24, 'F'),
+('Rafael Almeida', 'Maybelline', 28, 'M'),
+('Bruna Martins', 'Vult', 21, 'F'),
+('Eduardo Santos', 'Avon', 35, 'M'),
+('Mariana Pereira', 'Natura', 26, 'F'),
+('Lucas Ferreira', 'O Boticário', 23, 'M'),
+('Tatiane Rocha', 'Dove', 31, 'F'),
+('Fernando Pires', 'Revlon', 29, 'M'),
+('Sofia Martins', 'LOréal', 20, 'F');
+
+
+-- Consultando tabela criada 
+SELECT * FROM clientes;
+
+
+SELECT * 
+FROM clientes 
+WHERE Marca IN ('Natura', 'Avon', 'Loréal', 'jequiti')  -- Filtra clientes cujas marcas são 'Natura', 'Avon', 'Loréal' ou 'jequiti'
+AND idade BETWEEN 18 AND 30  -- Filtra clientes com idade entre 18 e 30 anos (inclusive)
+ORDER BY Marca;  -- Ordena os resultados pela coluna 'Marca' em ordem crescente
+
+SELECT * 
+FROM clientes 
+WHERE Marca LIKE 'NAt%'  -- Filtra clientes cujas marcas começam com 'NAt' (exemplo: 'Natura', 'NATCO')
+
+
+SELECT idade, Nome,
+   CASE  -- Inicia a lógica condicional
+     WHEN idade < 18 THEN 'joven'  -- Se a idade for menor que 18, a categoria será 'joven'
+     WHEN idade BETWEEN 18 AND 60 THEN 'adulto'  -- Se a idade estiver entre 18 e 60, a categoria será 'adulto'
+     ELSE 'idoso'  -- Para idades superiores a 60, a categoria será 'idoso'
+   END AS Categoria  -- Cria a coluna 'Categoria' com os resultados das condições acima
+FROM clientes;  -- Seleciona da tabela 'clientes'
+
+
+
+SELECT 
+    Marca AS Marcas,               -- Renomeia a coluna 'Marca' para 'Marcas' no resultado da consulta
+    COUNT(Nome) AS Número_de_Clientes,  -- Conta o número de clientes (baseado na coluna 'Nome') por marca
+    AVG(idade) AS Média_de_Idade,      -- Calcula a média das idades dos clientes para cada marca
+    MAX(idade) AS Idade_Máxima,       -- Encontra a maior idade dos clientes para cada marca
+    MIN(idade) AS Idade_Mínima        -- Encontra a menor idade dos clientes para cada marca
+FROM 
+    clientes                          -- Indica a tabela 'clientes' de onde os dados serão extraídos
+GROUP BY 
+    Marca;                            -- Agrupa os resultados pela coluna 'Marca'
+
+
+### funções e Cláusulas 
+
+SELECT: Usado para selecionar dados de uma tabela e retornar resultados em uma consulta SQL.
+WHERE: Filtra os resultados com base em uma condição específica.
+AND: Combina múltiplas condições, retornando resultados onde todas as condições são verdadeiras.
+WHEN: Usado em uma expressão CASE para definir uma condição específica a ser verificada.
+BETWEEN: Filtra valores dentro de um intervalo especificado (inclusive).
+THEN: Usado em uma expressão CASE para definir o valor a ser retornado quando a condição do WHEN for verdadeira.
+LIKE: Realiza uma comparação de padrões em campos de texto, com suporte para wildcards (coringas).
+ORDER BY: Ordena os resultados de uma consulta com base em uma ou mais colunas, em ordem crescente ou decrescente.
+GROUP BY: Agrupa os resultados com base em uma ou mais colunas, geralmente usado com funções agregadas como COUNT(), SUM(), etc
